@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.acsoft.superhero.core.Resource
 import com.acsoft.superhero.data.model.Hero
 import com.acsoft.superhero.data.remote.RemoteHeroDataSource
@@ -22,6 +24,11 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
 
     private lateinit var adapter: HeroAdapter
 
+    private var layoutManager: RecyclerView.LayoutManager? = null //manager
+    private var loading: Boolean = false //guarda estado de scroll, cargar o no datos nuevos de servidor
+
+
+
     private val viewModel by viewModels<HeroViewModel> {
         HeroModelFactory(HeroRepositoryImpl(
             RemoteHeroDataSource(RetrofitClient.webService)
@@ -36,11 +43,30 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
         setContentView(view)
 
         adapter = HeroAdapter(this)
-        binding.rvHeros.layoutManager = LinearLayoutManager(this)
+
+        layoutManager = GridLayoutManager(this,2)
+        binding.rvHeros.layoutManager = layoutManager
+
         binding.rvHeros.adapter = adapter
-
-
         getHeros()
+
+        binding.rvHeros.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(binding.rvHeros!!, dx, dy)
+                val visibleItemCount = (layoutManager as GridLayoutManager).childCount
+                val totalItemCount = (layoutManager as GridLayoutManager).itemCount
+                val firstVisible = (layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+                if (!loading && (visibleItemCount + firstVisible) >= totalItemCount) {
+                    loading = true
+                    Log.d("NEW","monorriel")
+                    viewModel.nextPage()
+                    getHeros()
+                }
+
+            }
+        })
+
+
 
 
        /* binding.button.setOnClickListener {
@@ -59,8 +85,10 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
                 is Resource.Success -> {
                     adapter.setHero(result.data)
                     Log.d("NEW",result.data.name)
+                    loading = false
                 }
                 is Resource.Failure -> {
+                    loading = false
                     Log.d("NEW","Fallo...")
                 }
             }

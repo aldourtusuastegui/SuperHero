@@ -1,12 +1,15 @@
 package com.acsoft.superhero.ui.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.acsoft.superhero.R
 import com.acsoft.superhero.core.BaseViewHolder
 import com.acsoft.superhero.data.model.Hero
 import com.acsoft.superhero.databinding.HeroItemBinding
+import com.squareup.picasso.Picasso
 
 class HeroAdapter(private val itemClickListener: OnHeroClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
@@ -25,7 +28,7 @@ class HeroAdapter(private val itemClickListener: OnHeroClickListener) : Recycler
         val itemBinding =
             HeroItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        val holder = HeroViewHolder(itemBinding)
+        val holder = HeroViewHolder(itemBinding, parent.context)
 
         itemBinding.root.setOnClickListener {
             val position = holder.adapterPosition.takeIf { it != DiffUtil.DiffResult.NO_POSITION }
@@ -48,10 +51,13 @@ class HeroAdapter(private val itemClickListener: OnHeroClickListener) : Recycler
         return heroList.size
     }
 
-    private inner class HeroViewHolder(val binding : HeroItemBinding) :
+    private inner class HeroViewHolder(val binding : HeroItemBinding, val context:Context) :
         BaseViewHolder<Hero>(binding.root) {
         override fun bind(item: Hero) {
             binding.tvTitle.text = item.name
+            Picasso.with(context)
+                    .load(item.image.url)
+                    .into(binding.imageViewMovieImage)
         }
     }
 
