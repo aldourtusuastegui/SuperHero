@@ -42,52 +42,25 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
         val view = binding.root
         setContentView(view)
 
-        adapter = HeroAdapter(this)
-
-        layoutManager = GridLayoutManager(this,2)
-        binding.rvHeros.layoutManager = layoutManager
-
-        binding.rvHeros.adapter = adapter
+        initRecycler()
         getHeros()
-
-        binding.rvHeros.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(binding.rvHeros, dx, dy)
-                val visibleItemCount = (layoutManager as GridLayoutManager).childCount
-                val totalItemCount = (layoutManager as GridLayoutManager).itemCount
-                val firstVisible = (layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-                if (!loading && (visibleItemCount + firstVisible) >= totalItemCount) {
-                    loading = true
-                    viewModel.nextPage()
-                    getHeros()
-                }
-
-            }
-        })
-
+        onScroll()
         searchHeroByName()
 
-    }
-
-    private fun searchHeroByName() {
-        binding.searchAccount.setOnQueryTextListener(object :  SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                getHeroByName(query!!)
-                loading = true
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-        binding.searchAccount.setOnCloseListener {
+        binding.ivRefresh.setOnClickListener {
+            binding.searchHero.onActionViewCollapsed()
             getHeros()
-            false
         }
+
+
     }
 
+    private fun initRecycler() {
+        adapter = HeroAdapter(this)
+        layoutManager = GridLayoutManager(this,2)
+        binding.rvHeros.layoutManager = layoutManager
+        binding.rvHeros.adapter = adapter
+    }
 
     private fun getHeros() {
         viewModel.getHerosApi().observe(this@MainActivity, { result ->
@@ -108,6 +81,47 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
 
         })
     }
+
+    private fun onScroll() {
+        binding.rvHeros.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(binding.rvHeros, dx, dy)
+                val visibleItemCount = (layoutManager as GridLayoutManager).childCount
+                val totalItemCount = (layoutManager as GridLayoutManager).itemCount
+                val firstVisible = (layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+                if (!loading && (visibleItemCount + firstVisible) >= totalItemCount) {
+                    loading = true
+                    viewModel.nextPage()
+                    getHeros()
+                }
+
+            }
+        })
+    }
+
+    private fun searchHeroByName() {
+        binding.searchHero.setOnQueryTextListener(object :  SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                getHeroByName(query!!)
+                Log.d("NEW",query!!)
+                loading = true
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        binding.searchHero.setOnCloseListener {
+            binding.searchHero.onActionViewCollapsed()
+            //getHeros()
+            false
+        }
+
+    }
+
+
 
     private fun getHeroByName(name:String) {
         viewModel.getHeroByName(name).observe(this@MainActivity, { result ->
