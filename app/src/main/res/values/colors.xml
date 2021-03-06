@@ -12,4 +12,8 @@
     <color name="title_color">#212121</color>
     <color name="subtitle_color">#757575</color>
 
+
+    <color name="dark_primary_color">#D32F2F</color>
+    <color name="primary_color">#F44336</color>
+
 </resources>

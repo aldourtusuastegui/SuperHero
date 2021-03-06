@@ -18,7 +18,7 @@
         android:layout_height="300dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
-        android:background="@color/black"/>
+        android:background="@color/primary_color"/>
 
 
     <TextView
