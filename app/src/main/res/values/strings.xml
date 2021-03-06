@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SuperHero</string>
+    <string name="intelligence">Inteligencia</string>
+    <string name="strength">Fuerza</string>
+    <string name="speed">Velocidad</string>
+    <string name="power">Poder</string>
+    <string name="first_appearance">Primera aparición</string>
+    <string name="publisher">Editora</string>
+    <string name="alignment">Alineación</string>
 </resources>

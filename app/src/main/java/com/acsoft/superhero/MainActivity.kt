@@ -1,5 +1,6 @@
 package com.acsoft.superhero
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.acsoft.superhero.application.AppConstants
 import com.acsoft.superhero.core.Resource
 import com.acsoft.superhero.data.model.Hero
 import com.acsoft.superhero.data.remote.RemoteHeroDataSource
@@ -17,6 +19,7 @@ import com.acsoft.superhero.databinding.ActivityMainBinding
 import com.acsoft.superhero.presentation.HeroModelFactory
 import com.acsoft.superhero.presentation.HeroViewModel
 import com.acsoft.superhero.repository.HeroRepositoryImpl
+import com.acsoft.superhero.ui.DetailActivity
 import com.acsoft.superhero.ui.adapters.HeroAdapter
 
 class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
@@ -45,14 +48,6 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
         initRecycler()
         getHeros()
         onScroll()
-        searchHeroByName()
-
-        binding.ivRefresh.setOnClickListener {
-            binding.searchHero.onActionViewCollapsed()
-            getHeros()
-        }
-
-
     }
 
     private fun initRecycler() {
@@ -99,50 +94,10 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
         })
     }
 
-    private fun searchHeroByName() {
-        binding.searchHero.setOnQueryTextListener(object :  SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                getHeroByName(query!!)
-                Log.d("NEW",query!!)
-                loading = true
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-        binding.searchHero.setOnCloseListener {
-            binding.searchHero.onActionViewCollapsed()
-            //getHeros()
-            false
-        }
-
-    }
-
-
-
-    private fun getHeroByName(name:String) {
-        viewModel.getHeroByName(name).observe(this@MainActivity, { result ->
-            when (result) {
-                is Resource.Loading -> {
-                    Log.d("NEW","Cargando...")
-                }
-                is Resource.Success -> {
-                    adapter.setHeroList(result.data.hero)
-                    loading = true
-                }
-                is Resource.Failure -> {
-                    loading = true
-                    Log.d("NEW","Fallo...")
-                }
-            }
-
-        })
-    }
 
     override fun onHeroClick(hero: Hero) {
-        Toast.makeText(this,hero.name,Toast.LENGTH_LONG).show()
+        val intent = Intent(this,DetailActivity::class.java)
+        intent.putExtra(AppConstants.HERO,hero)
+        startActivity(intent)
     }
 }
