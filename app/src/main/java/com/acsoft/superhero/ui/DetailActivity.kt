@@ -33,6 +33,8 @@ class DetailActivity : AppCompatActivity() {
 
         Picasso.with(this)
             .load(hero.image.url)
+            .placeholder(R.mipmap.ic_launcher)
+            .error(R.mipmap.ic_launcher)
             .into(binding.ivHero)
 
         supportActionBar?.title = hero.name

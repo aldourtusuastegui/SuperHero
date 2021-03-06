@@ -63,6 +63,8 @@ class HeroAdapter(private val itemClickListener: OnHeroClickListener) : Recycler
             binding.tvTitle.text = item.name
             Picasso.with(context)
                     .load(item.image.url)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
                     .into(binding.imageViewMovieImage)
         }
     }
