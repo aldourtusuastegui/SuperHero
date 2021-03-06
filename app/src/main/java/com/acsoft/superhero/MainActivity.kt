@@ -3,6 +3,7 @@ package com.acsoft.superhero
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,9 +25,8 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
 
     private lateinit var adapter: HeroAdapter
 
-    private var layoutManager: RecyclerView.LayoutManager? = null //manager
-    private var loading: Boolean = false //guarda estado de scroll, cargar o no datos nuevos de servidor
-
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var loading: Boolean = false
 
 
     private val viewModel by viewModels<HeroViewModel> {
@@ -52,13 +52,12 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
 
         binding.rvHeros.addOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(binding.rvHeros!!, dx, dy)
+                super.onScrolled(binding.rvHeros, dx, dy)
                 val visibleItemCount = (layoutManager as GridLayoutManager).childCount
                 val totalItemCount = (layoutManager as GridLayoutManager).itemCount
                 val firstVisible = (layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
                 if (!loading && (visibleItemCount + firstVisible) >= totalItemCount) {
                     loading = true
-                    Log.d("NEW","monorriel")
                     viewModel.nextPage()
                     getHeros()
                 }
@@ -66,15 +65,29 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
             }
         })
 
-
-
-
-       /* binding.button.setOnClickListener {
-            viewModel.nextPage()
-            getHeros()
-        }*/
+        searchHeroByName()
 
     }
+
+    private fun searchHeroByName() {
+        binding.searchAccount.setOnQueryTextListener(object :  SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                getHeroByName(query!!)
+                loading = true
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        binding.searchAccount.setOnCloseListener {
+            getHeros()
+            false
+        }
+    }
+
 
     private fun getHeros() {
         viewModel.getHerosApi().observe(this@MainActivity, { result ->
@@ -89,6 +102,25 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
                 }
                 is Resource.Failure -> {
                     loading = false
+                    Log.d("NEW","Fallo...")
+                }
+            }
+
+        })
+    }
+
+    private fun getHeroByName(name:String) {
+        viewModel.getHeroByName(name).observe(this@MainActivity, { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    Log.d("NEW","Cargando...")
+                }
+                is Resource.Success -> {
+                    adapter.setHeroList(result.data.hero)
+                    loading = true
+                }
+                is Resource.Failure -> {
+                    loading = true
                     Log.d("NEW","Fallo...")
                 }
             }

@@ -33,6 +33,16 @@ class HeroViewModel(private val repository: HeroRepository): ViewModel() {
         }
     }
 
+    fun getHeroByName(name:String) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(repository.getHeroByName(name)))
+        } catch (e: Exception) {
+            Log.d("NEW","fallo busqueda de nombre")
+            emit(Resource.Failure(e))
+        }
+    }
+
 }
 
 class HeroModelFactory(private val repo: HeroRepository) : ViewModelProvider.Factory {

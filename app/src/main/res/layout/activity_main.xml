@@ -7,6 +7,25 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+   <androidx.cardview.widget.CardView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="5dp"
+       app:cardCornerRadius="20dp">
+
+      <SearchView
+          android:id="@+id/search_account"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:iconifiedByDefault="false"
+          app:queryHint="Buscar"
+          app:defaultQueryHint="Buscar"
+          app:queryBackground="@android:color/transparent"
+          android:background="@color/white" />
+
+   </androidx.cardview.widget.CardView>
+
+
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/rv_heros"
        android:layout_width="match_parent"

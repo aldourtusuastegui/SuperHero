@@ -20,6 +20,12 @@ class HeroAdapter(private val itemClickListener: OnHeroClickListener) : Recycler
         notifyDataSetChanged()
     }
 
+    fun setHeroList(hero : List<Hero>) {
+        this.heroList.clear()
+        this.heroList.addAll(hero)
+        notifyDataSetChanged()
+    }
+
     interface OnHeroClickListener {
         fun onHeroClick(hero: Hero)
     }
