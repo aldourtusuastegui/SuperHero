@@ -1,6 +1,5 @@
 package com.acsoft.superhero.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
@@ -24,24 +23,13 @@ class HeroViewModel(private val repository: HeroRepository): ViewModel() {
         try {
             for (i in firstItem..lastItem) {
                 emit(Resource.Success(repository.getHerosApi(i)))
-                Log.d("NEW","success")
-                Log.d("NEW",i.toString())
             }
         } catch (e: Exception) {
-            Log.d("NEW","fallox2")
             emit(Resource.Failure(e))
         }
     }
 
-    fun getHeroByName(name:String) = liveData(Dispatchers.IO) {
-        emit(Resource.Loading())
-        try {
-            emit(Resource.Success(repository.getHeroByName(name)))
-        } catch (e: Exception) {
-            Log.d("NEW","fallo busqueda de nombre")
-            emit(Resource.Failure(e))
-        }
-    }
+
 
 }
 

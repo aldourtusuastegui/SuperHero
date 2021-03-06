@@ -7,6 +7,4 @@ interface HeroRepository {
 
     suspend fun getHerosApi(id:Int) :Hero
 
-    suspend fun getHeroByName(name:String) : HeroList
-
 }

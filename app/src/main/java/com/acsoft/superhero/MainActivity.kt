@@ -4,11 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.acsoft.superhero.application.AppConstants
 import com.acsoft.superhero.core.Resource
@@ -61,16 +58,14 @@ class MainActivity : AppCompatActivity(),HeroAdapter.OnHeroClickListener {
         viewModel.getHerosApi().observe(this@MainActivity, { result ->
             when (result) {
                 is Resource.Loading -> {
-                    Log.d("NEW","Cargando...")
+                    Log.d("TAG","Cargando...")
                 }
                 is Resource.Success -> {
                     adapter.setHero(result.data)
-                    Log.d("NEW",result.data.name)
                     loading = false
                 }
                 is Resource.Failure -> {
                     loading = false
-                    Log.d("NEW","Fallo...")
                 }
             }
 

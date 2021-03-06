@@ -10,7 +10,4 @@ class HeroRepositoryImpl(private val dataSourceRemote : RemoteHeroDataSource) : 
         return dataSourceRemote.getHeros(id)
     }
 
-    override suspend fun getHeroByName(name: String): HeroList {
-        return dataSourceRemote.getHeroByName(name)
-    }
 }
