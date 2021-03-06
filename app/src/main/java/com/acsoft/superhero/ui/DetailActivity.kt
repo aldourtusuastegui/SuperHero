@@ -35,6 +35,8 @@ class DetailActivity : AppCompatActivity() {
             .load(hero.image.url)
             .into(binding.ivHero)
 
+        supportActionBar?.title = hero.name
+
         binding.tvIntelligence.text = hero.powerstats.intelligence.toString().plus("%")
         binding.tvStrength.text = hero.powerstats.strength.toString().plus("%")
         binding.tvSpeed.text = hero.powerstats.speed.toString().plus("%")
