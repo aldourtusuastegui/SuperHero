@@ -39,12 +39,15 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.title = hero.name
 
-        binding.tvIntelligence.text = hero.powerstats.intelligence.toString().plus("%")
-        binding.tvStrength.text = hero.powerstats.strength.toString().plus("%")
-        binding.tvSpeed.text = hero.powerstats.speed.toString().plus("%")
-        binding.tvPower.text = hero.powerstats.power.toString().plus("%")
+        binding.pbIntelligence.progress = hero.powerstats.intelligence
+        binding.pbStrength.progress = hero.powerstats.strength
+        binding.pbSpeed.progress = hero.powerstats.speed
+        binding.pbPower.progress = hero.powerstats.power
+        binding.pbCombat.progress = hero.powerstats.combat
 
         binding.tvName.text = hero.name
+        binding.tvFullname.text =
+            if(!hero.biography.fullName.isNullOrEmpty()) hero.biography.fullName else "N/A"
         binding.tvFistAppearance.text = hero.biography.firstAppearance
         binding.tvPublisher.text = hero.biography.publisher
         binding.tvAlignment.text = hero.biography.alignment

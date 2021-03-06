@@ -6,6 +6,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Biography(
+    @SerializedName("full-name")
+    val fullName:String,
     @SerializedName("first-appearance")
     val firstAppearance:String,
     val publisher:String,

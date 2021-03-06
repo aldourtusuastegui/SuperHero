@@ -2,7 +2,6 @@ package com.acsoft.superhero.data.remote
 
 import com.acsoft.superhero.application.AppConstants
 import com.acsoft.superhero.data.model.Hero
-import com.acsoft.superhero.data.model.HeroList
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,8 +14,6 @@ interface WebService {
     @GET("{id}")
     suspend fun getHeros(@Path("id") id:Int) : Hero
 
-    @GET("search/{name}")
-    suspend fun getHeroByName(@Path("name") name:String) : HeroList
 }
 
 object RetrofitClient {

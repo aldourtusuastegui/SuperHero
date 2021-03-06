@@ -40,17 +40,17 @@
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_intelligence"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        android:id="@+id/pb_intelligence"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:maxWidth="100dp"
+        android:progress="0"
+        android:progressTint="@color/primary_color"
         android:layout_marginTop="4dp"
-        android:textColor="@color/subtitle_color"
-        android:textSize="@dimen/subtitle"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_title_intelligence"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_intelligence"
-        tools:text="80%" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_intelligence" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -74,18 +74,18 @@
         android:textColor="@color/title_color"
         android:textSize="@dimen/subtitle"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tv_intelligence"
-        app:layout_constraintTop_toBottomOf="@+id/tv_intelligence" />
+        app:layout_constraintStart_toStartOf="@+id/pb_intelligence"
+        app:layout_constraintTop_toBottomOf="@+id/pb_intelligence" />
 
-    <TextView
-        android:id="@+id/tv_strength"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        android:id="@+id/pb_strength"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        tools:text="50%"
-        android:textColor="@color/subtitle_color"
-        android:textSize="@dimen/subtitle"
-        android:textStyle="bold"
+        android:maxWidth="100dp"
+        android:progress="0"
+        android:progressTint="@color/primary_color"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -98,18 +98,18 @@
         android:textColor="@color/title_color"
         android:textSize="@dimen/subtitle"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tv_strength"
-        app:layout_constraintTop_toBottomOf="@+id/tv_strength" />
+        app:layout_constraintStart_toStartOf="@+id/pb_strength"
+        app:layout_constraintTop_toBottomOf="@+id/pb_strength" />
 
-    <TextView
-        android:id="@+id/tv_speed"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        android:id="@+id/pb_speed"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        tools:text="12%"
-        android:textColor="@color/subtitle_color"
-        android:textSize="@dimen/subtitle"
-        android:textStyle="bold"
+        android:maxWidth="100dp"
+        android:progress="0"
+        android:progressTint="@color/primary_color"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -122,19 +122,18 @@
         android:textColor="@color/title_color"
         android:textSize="@dimen/subtitle"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tv_speed"
-        app:layout_constraintTop_toBottomOf="@+id/tv_speed" />
+        app:layout_constraintStart_toStartOf="@+id/pb_speed"
+        app:layout_constraintTop_toBottomOf="@+id/pb_speed" />
 
-    <TextView
-        android:id="@+id/tv_power"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        android:id="@+id/pb_power"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="TextView"
-        tools:text="25%"
-        android:textColor="@color/subtitle_color"
-        android:textSize="@dimen/subtitle"
-        android:textStyle="bold"
+        android:maxWidth="100dp"
+        android:progress="0"
+        android:progressTint="@color/primary_color"
         app:layout_constraintStart_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -149,7 +148,7 @@
         android:textSize="@dimen/subtitle"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_fullname" />
 
     <TextView
         android:id="@+id/tv_fist_appearance"
@@ -215,6 +214,56 @@
         android:text="good"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/combat"
+        android:textColor="@color/title_color"
+        android:textSize="@dimen/subtitle"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/pb_power"
+        app:layout_constraintTop_toBottomOf="@+id/pb_power" />
+
+    <ProgressBar
+        android:id="@+id/pb_combat"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:maxWidth="100dp"
+        android:progress="0"
+        android:progressTint="@color/primary_color"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/tv_fullname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        tools:text="Daphne Powell"
+        android:textColor="@color/subtitle_color"
+        android:textSize="@dimen/subtitle"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fullname"
+        android:textColor="@color/title_color"
+        android:textSize="@dimen/subtitle"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

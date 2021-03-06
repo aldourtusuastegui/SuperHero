@@ -7,4 +7,6 @@
     <string name="first_appearance">Primera aparición</string>
     <string name="publisher">Editora</string>
     <string name="alignment">Alineación</string>
+    <string name="combat">Combate</string>
+    <string name="fullname">Nombre completo</string>
 </resources>
